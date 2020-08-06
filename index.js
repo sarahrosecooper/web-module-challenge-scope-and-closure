@@ -2,35 +2,39 @@
 
 /**
  * ### Challenge `processFirstItem`
- * 
+ *
  * @instructions
  * Implement a higher-order function called `processFirstItem`.
  * It takes two arguments:
  * @param stringList an array of strings.
  * @param callback function that takes a string as its argument.
  * @returns the result of invoking `callback` with the FIRST element in `stringList`.
- * 
+ *
  * Example of usage of this higher-order function:
  * Invoking `processFirstItem` passing `['foo', 'bar']` and `(str) => str + str`,
  * should return 'foofoo'.
-*/
-function processFirstItem(stringList, callback) {
-  return callback(stringList[0])
+ */
+/* function processFirstItem(stringList, callback) {
+  return callback(stringList[0]);
 }
 
-// ⭐️ Example Challenge END ⭐️
+processFirstItem(`['foo', 'bar']`); */
 
+// ⭐️ Example Challenge END ⭐️
 
 ///// M V P ///////
 
 /* Task 1: `counterMaker`
  * Study the code for counter1 and counter2. Answer the questions below.
+
  * 
  * 1. What is the difference between counter1 and counter2?
+ * Counter 1 uses local scope and counter2 uses global.
  * 
  * 2. Which of the two uses a closure? How can you tell?
- * 
+ * counter1 used a closure because it has a child function nested inside that reaches out to pull let count into it's own function.
  * 3. In what scenario would the counter1 code be preferable? In what scenario would counter2 be better? 
+ * count1 would be preferable when you don't want the count to reset every time the function is invoked, for instance when trying to count something incrementally, and counter2 would be better for the reverse.
  *
 */
 
@@ -38,8 +42,8 @@ function processFirstItem(stringList, callback) {
 function counterMaker() {
   let count = 0;
   return function counter() {
-   return count++;
-  }
+    return count++;
+  };
 }
 
 const counter1 = counterMaker();
@@ -51,18 +55,20 @@ function counter2() {
   return count++;
 }
 
-
 /* Task 2: inning() 
 
 Write a function called `inning` that returns a random number of points that a team scored in an inning. This should be a whole number between 0 and 2. */
 
-function inning(/*Code Here*/){
-
-    /*Code Here*/
-
+function inning(/*Code Here*/) {
+  return Math.floor(Math.random() * 3);
 }
 
-/* Task 3: finalScore()
+console.log(inning());
+console.log(inning());
+console.log(inning());
+
+/*
+Task 3
 
 Write a higher order function called `finalScore` that accepts the callback function `inning` (from above) and a number of innings and and returns the final score of the game in the form of an object.
 
@@ -74,13 +80,23 @@ finalScore(inning, 9) might return:
   "Away": 5,
 }
 
-*/ 
-
-function finalScore(/*code Here*/){
-
-  /*Code Here*/
-
+*/
+function finalScore(callback, num) {
+  let home = 0;
+  let away = 0;
+  for (let i = 0; i <= num; i++) {
+    home += callback();
+  }
+  for (let j = 0; j <= num; j++) {
+    away += callback();
+  }
+  return {
+    Home: home,
+    Away: away,
+  };
 }
+
+console.log(finalScore(inning, 11));
 
 /* Task 4: 
 
@@ -102,9 +118,6 @@ and returns the score at each pont in the game, like so:
 9th inning: awayTeam - homeTeam
 Final Score: awayTeam - homeTeam */
 
-
-function scoreboard(/* CODE HERE */) {
+function scoreboard(getInningScore, inning, num) {
   /* CODE HERE */
 }
-
-
